@@ -1,0 +1,9 @@
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+<button (click)="getFlights()">search</button>
+<div *ngFor="let flight of flights">
+  <app-flight [flight]="flight" (eventEmitter)="alert1($event)"></app-flight>
+</div>

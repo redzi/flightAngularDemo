@@ -1,0 +1,4 @@
+<div (click)="onClick()">departing: {{flight.itineraryPart[0].segments[0].departure}}</div>
+<div>arriving: {{flight.itineraryPart[0].segments[0].arrival}}</div>
+<!--<div>flight no.: {{flight.itineraryPart[0].segments[0].flight.flightNumber}}</div>-->
+<div>total: {{flight.total.alternatives[0][0].amount.toFixed(2)}}</div>
