@@ -1,16 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import {FlightService} from './flight.service';
-import {HttpClientModule} from '@angular/common/http';
-import { FlightComponent } from './flight/flight.component';
-import { LoginComponent } from './login/login.component';
-import {AuthenticationService} from './authentication-service.service';
+import {AppComponent} from './components/app.component';
+import {FlightComponent} from './components/flight/flight.component';
+import {LoginComponent} from './components/login/login.component';
+import {FlightsComponent} from './components/flights/flights.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 import {routing} from './routing/app.routing';
+import {FlightService} from './services/flight.service';
+import {AuthenticationService} from './services/authentication-service.service';
 import {AuthGuard} from './guard/authGuard';
-import { FlightsComponent } from './flights/flights.component';
 
 @NgModule({
   declarations: [
@@ -21,10 +20,10 @@ import { FlightsComponent } from './flights/flights.component';
   ],
   imports: [
     BrowserModule,
-      FormsModule,
+    FormsModule,
     HttpClientModule,
-      ReactiveFormsModule,
-      routing
+    ReactiveFormsModule,
+    routing
   ],
   providers: [FlightService, AuthenticationService, AuthGuard],
   bootstrap: [AppComponent]

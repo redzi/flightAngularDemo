@@ -1,7 +1,7 @@
 import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from '../login/login.component';
+import {FlightsComponent} from '../components/flights/flights.component';
 import {AuthGuard} from '../guard/authGuard';
-import {FlightsComponent} from '../flights/flights.component';
+import {LoginComponent} from '../components/login/login.component';
 
 const routes: Routes = [
     {path: '', component: FlightsComponent, canActivate: [AuthGuard]},

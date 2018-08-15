@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {filter, map} from 'rxjs/internal/operators';
-import {FlightService} from '../flight.service';
+import {FlightService} from '../../services/flight.service';
 
 @Component({
   selector: 'app-flights',
