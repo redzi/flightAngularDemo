@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Offer} from '../../model/Offer';
 
 @Component({
   selector: 'app-flight',
@@ -10,10 +11,10 @@ export class FlightComponent implements OnInit {
   constructor() { }
 
   @Input()
-  flight: any;
+  flight: Offer;
 
   @Output()
-  eventEmitter: EventEmitter<any> = new EventEmitter<any>();
+  eventEmitter: EventEmitter<Offer> = new EventEmitter<Offer>();
 
   onClick() {
     this.eventEmitter.emit(this.flight);

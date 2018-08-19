@@ -1,36 +1,41 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {filter, map} from 'rxjs/internal/operators';
 import {FlightService} from '../../services/flight.service';
+import {Offer} from '../../model/Offer';
 
 @Component({
-  selector: 'app-flights',
-  templateUrl: './flights.component.html',
-  styleUrls: ['./flights.component.css']
+    selector: 'app-flights',
+    templateUrl: './flights.component.html',
+    styleUrls: ['./flights.component.css']
 })
 export class FlightsComponent implements OnInit {
-    title = 'kuku';
-    data;
-    flights;
-    error = false;
+    private title: string = 'kuku';
+    private flights: Array<Offer>;
+    private error: boolean = false;
 
-    constructor (private flightService: FlightService) {  }
+    constructor(private flightService: FlightService) {
+    }
 
     ngOnInit() {
     }
 
-    getFlights () {
+    getFlights(): void {
         this.flightService.getFlights()
             .pipe(
                 map(data => data.unbundledOffers),
                 map(data => data[0]),
-                filter(data => {
-                    let entries = Object.entries(data[0].itineraryPart[0].segments[0]);
-                    entries = entries.length > 0 ? entries : [['empty', '1']];
-                    return entries.some(f => f[0] === 'departure');
-                }))
-            .subscribe( data => {
-                    console.log(data);
-                    this.flights = data;
+                map(flights => flights.filter(flight => flight
+                    && flight.itineraryPart
+                    && flight.itineraryPart[0]
+                    && flight.itineraryPart[0].segments
+                    && flight.itineraryPart[0].segments[0]
+                    && flight.itineraryPart[0].segments[0].departure !== undefined)),
+                map(flights => flights.sort((a, b) =>
+                    a.total.alternatives[0][0].amount.toFixed(2) - b.total.alternatives[0][0].amount.toFixed(2)))
+            )
+            .subscribe(flights => {
+                    console.log(flights);
+                    this.flights = flights;
                     console.log(this.flights);
                     this.error = false;
                 },

@@ -10,13 +10,15 @@ import {routing} from './routing/app.routing';
 import {FlightService} from './services/flight.service';
 import {AuthenticationService} from './services/authentication-service.service';
 import {AuthGuard} from './guard/authGuard';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FlightComponent,
     LoginComponent,
-    FlightsComponent
+    FlightsComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
