@@ -1,3 +1,35 @@
-<p>
-  search works!
-</p>
+<div class="search-form">
+  <form #searchForm="ngForm" (submit)="emitSearchParameters()">
+    <div class="form-group">
+      <label for="departure">Departure</label>
+      <input type="text" class="form-control" id="departure" [(ngModel)]="search.from" name="from" #departure="ngModel" required maxlength="3" minlength="3"/>
+      <div *ngIf="departure.invalid && (departure.dirty || departure.touched)"
+           class="alert alert-danger">
+        <div *ngIf="departure.errors.required">
+          Departure field is required.
+        </div>
+        <div *ngIf="departure.errors.minlength">
+          Departure must be exactly 3 characters long.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="arrival">Arrival</label>
+      <input type="text" class="form-control" id="arrival" [(ngModel)]="search.to" name="to" #arrival="ngModel" required maxlength="3" minlength="3"/>
+      <div *ngIf="arrival.invalid && (arrival.dirty || arrival.touched)"
+           class="alert alert-danger">
+        <div *ngIf="arrival.errors.required">
+          Arrival field is required.
+        </div>
+        <div *ngIf="arrival.errors.minlength">
+          Arrival must be exactly 3 characters long.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="date">Date</label>
+      <input type="date" id="date" class="form-control" name="when" [ngModel]="search.when | date:'yyyy-MM-dd'" (ngModelChange)="search.when = $event" value="{{search.when | date: 'yyyy-MM-dd'}}" #when="ngModel" min="{{now | date: 'yyyy-MM-dd'}}" required/>
+    </div>
+    <button class="button btn-primary" type="submit" [ngClass]="{disallowed: !searchForm.valid}" [disabled]="!searchForm.valid">Search</button>
+  </form>
+</div>

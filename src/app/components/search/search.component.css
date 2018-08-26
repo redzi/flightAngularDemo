@@ -1,0 +1,22 @@
+.search-form {
+    margin: 0.5rem 0.5rem 0.5rem 1rem;
+    width: 15rem;
+}
+
+.button {
+    width: 5rem;
+    transition: transform .3s;
+}
+
+.button:hover {
+    transform: scale(1.1);
+}
+
+.button {
+    width: 5rem;
+}
+
+.ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+}
+

@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {filter, map} from 'rxjs/internal/operators';
 import {FlightService} from '../../services/flight.service';
 import {Offer} from '../../model/Offer';
+import {SearchOptionsService} from '../../services/search-options.service';
+import {Search} from '../../model/Search';
 
 @Component({
     selector: 'app-flights',
@@ -12,15 +14,17 @@ export class FlightsComponent implements OnInit {
     private title: string = 'kuku';
     private flights: Array<Offer>;
     private error: boolean = false;
+    private waiting: boolean = false;
 
-    constructor(private flightService: FlightService) {
+    constructor(private flightService: FlightService, private searchOptions: SearchOptionsService) {
     }
 
     ngOnInit() {
     }
 
-    getFlights(): void {
-        this.flightService.getFlights()
+    getFlights(searchParameters: Search): void {
+        this.waiting = true;
+        this.flightService.getFlights(searchParameters.from, searchParameters.to, searchParameters.when)
             .pipe(
                 map(data => data.unbundledOffers),
                 map(data => data[0]),
@@ -38,9 +42,11 @@ export class FlightsComponent implements OnInit {
                     this.flights = flights;
                     console.log(this.flights);
                     this.error = false;
+                    this.waiting = false;
                 },
                 err => {
                     this.error = true;
+                    this.waiting = false;
                     console.error('oops, an error!', err);
                 });
     }

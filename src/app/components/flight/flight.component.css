@@ -1,3 +1,12 @@
 .card {
     max-width: 25rem;
+    cursor: pointer;
+    transition: box-shadow, transform .3s;
+    border-radius:10px;
+    border: 1px solid #ccc;
+}
+
+.card:hover {
+    box-shadow: 0 0 21px rgba(33,33,33,.2);
+    transform: translateY(-0.25em);
 }

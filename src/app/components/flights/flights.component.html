@@ -1,11 +1,16 @@
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-</div>
-<button class="button btn-primary" (click)="getFlights()">Search</button>
-<div class="card-deck">
-  <div *ngFor="let flight of flights">
-    <app-flight [flight]="flight" (eventEmitter)="alert1($event)"></app-flight>
-  </div>
+<div>
+    <div style="text-align:center">
+        <h1>
+            Welcome to {{ title }}!
+        </h1>
+    </div>
+    <app-search (searchParameters)="getFlights($event)"></app-search>
+    <div class="card-deck">
+        <div *ngFor="let flight of flights">
+            <app-flight [flight]="flight" (eventEmitter)="alert1($event)"></app-flight>
+        </div>
+    </div>
+    <div id="loading" *ngIf="waiting">
+        <h1><span>Loading...</span></h1>
+    </div>
 </div>

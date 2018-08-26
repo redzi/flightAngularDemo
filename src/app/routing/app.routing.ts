@@ -4,7 +4,8 @@ import {AuthGuard} from '../guard/authGuard';
 import {LoginComponent} from '../components/login/login.component';
 
 const routes: Routes = [
-    {path: '', component: FlightsComponent, canActivate: [AuthGuard]},
+    // {path: '', component: FlightsComponent, canActivate: [AuthGuard]},
+    {path: '', component: FlightsComponent},
     {path: 'login', component: LoginComponent},
     {path: '**', redirectTo: ''}
 ];
