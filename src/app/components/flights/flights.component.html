@@ -1,16 +1,27 @@
 <div>
     <div style="text-align:center">
         <h1>
-            Welcome to {{ title }}!
+            {{ title }}
         </h1>
     </div>
     <app-search (searchParameters)="getFlights($event)"></app-search>
-    <div class="card-deck">
-        <div *ngFor="let flight of flights">
-            <app-flight [flight]="flight" (eventEmitter)="alert1($event)"></app-flight>
+    <div class="card-deck" *ngFor="let cabinClass of cabinClasses">
+        <div class="row">
+            <div class="col">{{cabinClass}}</div>
+        </div>
+        <div class="row">
+            <div *ngFor="let flight of flights | filterFlight: cabinClass">
+                <app-flight [flight]="flight" (eventEmitter)="alert1($event)"></app-flight>
+            </div>
         </div>
     </div>
     <div id="loading" *ngIf="waiting">
         <h1><span>Loading...</span></h1>
+    </div>
+    <div id="no-flights" *ngIf="noFlights" class="alert alert-warning">
+        Sorry, there are no available flights for the selected search criteria!
+    </div>
+    <div id="error" *ngIf="error" class="alert alert-danger">
+        Sorry, an error occurred, please try again!
     </div>
 </div>

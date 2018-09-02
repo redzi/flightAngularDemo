@@ -1,8 +1,20 @@
 <div class="card m-2" (click)="onClick()">
     <div class="card-body">
-        <div>departing: {{flight.itineraryPart[0].segments[0].departure}}</div>
-        <div>arriving: {{flight.itineraryPart[0].segments[0].arrival}}</div>
-        <div>flight no.: {{flight.itineraryPart[0].segments[0].flight.flightNumber}}</div>
-        <div>total: {{flight.total.alternatives[0][0].amount.toFixed(2)}}</div>
+        <div class="row">
+            <div class="col">
+                <div>Departing:</div>
+                <div><span>{{flight.itineraryPart[0].segments[0].departure | date: 'HH:mm'}}</span></div>
+            </div>
+            <div class="col">
+                <div>Arriving:</div>
+                <div><span>{{flight.itineraryPart[0].segments[0].arrival | date: 'HH:mm'}}</span></div>
+            </div>
+            <div class="col">
+                <div>flight no.: {{flight.itineraryPart[0].segments[0].flight.flightNumber}}</div>
+            </div>
+            <div class="col">
+                <div>{{flight.cabinClass}}: {{flight.total.alternatives[0][0].amount | currency: 'AUD'}}</div>
+            </div>
+        </div>
     </div>
 </div>

@@ -11,10 +11,12 @@ import {Search} from '../../model/Search';
     styleUrls: ['./flights.component.css']
 })
 export class FlightsComponent implements OnInit {
-    private title: string = 'kuku';
+    private title: string = 'Search Page';
     private flights: Array<Offer>;
     private error: boolean = false;
     private waiting: boolean = false;
+    private noFlights: boolean = false;
+    private cabinClasses: Array<String> = [];
 
     constructor(private flightService: FlightService, private searchOptions: SearchOptionsService) {
     }
@@ -24,7 +26,9 @@ export class FlightsComponent implements OnInit {
 
     getFlights(searchParameters: Search): void {
         this.waiting = true;
-        this.flightService.getFlights(searchParameters.from, searchParameters.to, searchParameters.when)
+        this.error = false;
+        this.noFlights = false;
+        this.flightService.getFlights(searchParameters.from, searchParameters.to, searchParameters.when, searchParameters.cabinClass)
             .pipe(
                 map(data => data.unbundledOffers),
                 map(data => data[0]),
@@ -33,9 +37,11 @@ export class FlightsComponent implements OnInit {
                     && flight.itineraryPart[0]
                     && flight.itineraryPart[0].segments
                     && flight.itineraryPart[0].segments[0]
-                    && flight.itineraryPart[0].segments[0].departure !== undefined)),
+                    && flight.itineraryPart[0].segments[0].departure !== undefined
+                    && flight.total.alternatives[0] !== undefined
+                    && flight.total.alternatives[0][0].amount !== undefined)),
                 map(flights => flights.sort((a, b) =>
-                    a.total.alternatives[0][0].amount.toFixed(2) - b.total.alternatives[0][0].amount.toFixed(2)))
+                    new Date(a.itineraryPart[0].segments[0].departure) - new Date(b.itineraryPart[0].segments[0].departure)))
             )
             .subscribe(flights => {
                     console.log(flights);
@@ -43,11 +49,22 @@ export class FlightsComponent implements OnInit {
                     console.log(this.flights);
                     this.error = false;
                     this.waiting = false;
+                    if (flights.length === 0) {
+                        this.noFlights = true;
+                    }
+                    this.cabinClasses = this.flights.map(fligh => fligh.cabinClass).reduce(
+                        (cabinClasses, cc) => {
+                            if (!cabinClasses.includes(cc)) {
+                                cabinClasses.push(cc);
+                            }
+                            return cabinClasses;
+                        }, []);
                 },
                 err => {
                     this.error = true;
                     this.waiting = false;
-                    console.error('oops, an error!', err);
+                    this.flights = [];
+                    console.error('An error from search service!', err);
                 });
     }
 

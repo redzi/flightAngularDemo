@@ -4,6 +4,7 @@ import {Search} from '../../model/Search';
 
 const from = 'SYD';
 const to = 'MEL';
+const cabinClass = 'Economy';
 
 @Component({
   selector: 'app-search',
@@ -19,7 +20,7 @@ export class SearchComponent implements OnInit {
   private searchParameters: EventEmitter<Search> = new EventEmitter();
 
   constructor(private searchOptions: SearchOptionsService) {
-    this.search = new Search(from, to, this.now);
+    this.search = new Search(from, to, this.now, cabinClass);
   }
 
   emitSearchParameters() {

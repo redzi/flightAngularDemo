@@ -17,18 +17,18 @@ export class FlightService {
         headers.append('Authorization', 'Basic ' + btoa('json_user:json_password'));
     }
 
-    getFlights(from: string, to: string, when: Date): Observable<any> {
+    getFlights(from: string, to: string, when: Date, cabinClass: string): Observable<any> {
         let headers = new HttpHeaders();
         // FlightService.createAuthorizationHeader(headers);
         headers = headers.set('Authorization', 'Basic ' + btoa('json_user:json_password')).set('Content-Type', 'application/json');
         return this
             .http
-            .post(FlightService.url, this.getRequest(from, to, when), {headers: headers} );
+            .post(FlightService.url, this.getRequest(from, to, when, cabinClass), {headers: headers} );
     }
 
-    private getRequest(from: string, to: string, when: Date): string {
+    private getRequest(from: string, to: string, when: Date, cabinClass: string): string {
         return `{
-	                    "cabinClass": "Economy",
+	                    ${cabinClass ? `"cabinClass" : "${cabinClass}",` : ``}
 	                    "awardBooking": "false",
 	                    "promoCodes": [],
 	                    "pointOfSale": null,

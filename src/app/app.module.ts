@@ -11,6 +11,7 @@ import {FlightService} from './services/flight.service';
 import {AuthenticationService} from './services/authentication-service.service';
 import {AuthGuard} from './guard/authGuard';
 import { SearchComponent } from './components/search/search.component';
+import { FilterFlightPipe } from './pipes/filter-flight.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SearchComponent } from './components/search/search.component';
     FlightComponent,
     LoginComponent,
     FlightsComponent,
-    SearchComponent
+    SearchComponent,
+    FilterFlightPipe
   ],
   imports: [
     BrowserModule,

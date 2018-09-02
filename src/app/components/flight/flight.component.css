@@ -1,5 +1,5 @@
 .card {
-    max-width: 25rem;
+    max-width: 50rem;
     cursor: pointer;
     transition: box-shadow, transform .3s;
     border-radius:10px;
@@ -7,6 +7,16 @@
 }
 
 .card:hover {
-    box-shadow: 0 0 21px rgba(33,33,33,.2);
+    box-shadow: 0 0 21px lightskyblue;
     transform: translateY(-0.25em);
+    border: 1px solid #008ccc;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.col {
+    max-width: 11rem;
+    text-align: center;
 }
