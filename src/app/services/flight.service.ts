@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 export class FlightService {
 
     static url = 'http://localhost:8090/SSW2010/api/v3.6/products/air/search?jipcc=VAVA';
+    // static url = 'http://ctovm1824.sgdcelab.sabre.com:8081/SSW2010/api/v3.6/products/air/search?jipcc=VAVA';
 
     constructor(private http: HttpClient) {
 

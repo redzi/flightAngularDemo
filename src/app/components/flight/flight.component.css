@@ -4,6 +4,10 @@
     transition: box-shadow, transform .3s;
     border-radius:10px;
     border: 1px solid #ccc;
+    margin-left: 1rem;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-top: 1rem;
 }
 
 .card:hover {

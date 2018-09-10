@@ -1,5 +1,5 @@
 <div>
-    <div style="text-align:center">
+    <div id="header" style="text-align:center">
         <h1>
             {{ title }}
         </h1>
@@ -7,7 +7,7 @@
     <app-search (searchParameters)="getFlights($event)"></app-search>
     <div class="card-deck" *ngFor="let cabinClass of cabinClasses">
         <div class="row">
-            <div class="col">{{cabinClass}}</div>
+            <div class="col"><h3 class="cabin-class">{{cabinClass}}</h3></div>
         </div>
         <div class="row">
             <div *ngFor="let flight of flights | filterFlight: cabinClass">

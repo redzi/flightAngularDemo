@@ -1,5 +1,5 @@
 .card-deck {
-    margin: 0.5rem;
+    margin: 1rem;
 }
 
 #loading {
@@ -28,4 +28,14 @@
     font-size: 1.5rem;
     text-align: center;
     line-height: 3rem;
+}
+
+#header {
+    height: 55px;
+    background-color: darkgrey;
+    color: white;
+}
+
+.cabin-class {
+    color: white;
 }

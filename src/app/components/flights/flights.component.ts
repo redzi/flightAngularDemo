@@ -41,7 +41,8 @@ export class FlightsComponent implements OnInit {
                     && flight.total.alternatives[0] !== undefined
                     && flight.total.alternatives[0][0].amount !== undefined)),
                 map(flights => flights.sort((a, b) =>
-                    new Date(a.itineraryPart[0].segments[0].departure) - new Date(b.itineraryPart[0].segments[0].departure)))
+                    (new Date(a.itineraryPart[0].segments[0].departure)).getTime()
+                    - (new Date(b.itineraryPart[0].segments[0].departure)).getTime()))
             )
             .subscribe(flights => {
                     console.log(flights);
