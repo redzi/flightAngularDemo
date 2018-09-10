@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {filter, map} from 'rxjs/internal/operators';
+import {map, tap} from 'rxjs/internal/operators';
 import {FlightService} from '../../services/flight.service';
 import {Offer} from '../../model/Offer';
 import {SearchOptionsService} from '../../services/search-options.service';
 import {Search} from '../../model/Search';
+import {ExecutionCookieReaderService} from '../../services/execution-cookie-reader.service';
 
 @Component({
     selector: 'app-flights',
@@ -18,7 +19,8 @@ export class FlightsComponent implements OnInit {
     private noFlights: boolean = false;
     private cabinClasses: Array<String> = [];
 
-    constructor(private flightService: FlightService, private searchOptions: SearchOptionsService) {
+    constructor(private flightService: FlightService, private searchOptions: SearchOptionsService,
+                private executionService: ExecutionCookieReaderService) {
     }
 
     ngOnInit() {
@@ -30,7 +32,10 @@ export class FlightsComponent implements OnInit {
         this.noFlights = false;
         this.flightService.getFlights(searchParameters.from, searchParameters.to, searchParameters.when, searchParameters.cabinClass)
             .pipe(
-                map(data => data.unbundledOffers),
+                tap(data => console.log(data)),
+                tap(data => console.log(data.headers.get('Execution'))),
+                tap(data => this.executionService.setHeaders(data.headers)),
+                map(data => data.body.unbundledOffers),
                 map(data => data[0]),
                 map(flights => flights.filter(flight => flight
                     && flight.itineraryPart
@@ -47,7 +52,6 @@ export class FlightsComponent implements OnInit {
             .subscribe(flights => {
                     console.log(flights);
                     this.flights = flights;
-                    console.log(this.flights);
                     this.error = false;
                     this.waiting = false;
                     if (flights.length === 0) {
@@ -71,5 +75,6 @@ export class FlightsComponent implements OnInit {
 
     alert1(event) {
         alert(JSON.stringify(event));
+        console.log(this.executionService.getExecution());
     }
 }

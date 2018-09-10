@@ -1,30 +1,25 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {AuthServiceService} from './auth-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FlightService {
 
-    static url = 'http://localhost:8090/SSW2010/api/v3.6/products/air/search?jipcc=VAVA';
+    private static url = 'http://localhost:8090/SSW2010/api/v3.6/products/air/search?jipcc=VAVA';
     // static url = 'http://ctovm1824.sgdcelab.sabre.com:8081/SSW2010/api/v3.6/products/air/search?jipcc=VAVA';
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private authService: AuthServiceService) {
 
-    }
-
-    private static createAuthorizationHeader(headers: HttpHeaders) {
-        headers.append('Authorization', 'Basic ' + btoa('json_user:json_password'));
     }
 
     getFlights(from: string, to: string, when: Date, cabinClass: string): Observable<any> {
-        let headers = new HttpHeaders();
-        // FlightService.createAuthorizationHeader(headers);
-        headers = headers.set('Authorization', 'Basic ' + btoa('json_user:json_password')).set('Content-Type', 'application/json');
         return this
             .http
-            .post(FlightService.url, this.getRequest(from, to, when, cabinClass), {headers: headers} );
+            .post(FlightService.url, this.getRequest(from, to, when, cabinClass),
+                {headers: this.authService.getHeaders(), observe: 'response'} );
     }
 
     private getRequest(from: string, to: string, when: Date, cabinClass: string): string {
