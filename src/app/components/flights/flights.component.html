@@ -6,7 +6,7 @@
         </div>
         <div class="row">
             <div *ngFor="let flight of flights | filterFlight: cabinClass">
-                <app-flight [flight]="flight" (eventEmitter)="alert1($event)"></app-flight>
+                <app-flight [flight]="flight" (eventEmitter)="selectFlight($event)"></app-flight>
             </div>
         </div>
     </div>

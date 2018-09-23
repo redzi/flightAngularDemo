@@ -5,6 +5,7 @@ import {Offer} from '../../model/Offer';
 import {SearchOptionsService} from '../../services/search-options.service';
 import {Search} from '../../model/Search';
 import {ExecutionCookieReaderService} from '../../services/execution-cookie-reader.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-flights',
@@ -20,7 +21,8 @@ export class FlightsComponent implements OnInit {
     private cabinClasses: Array<String> = [];
 
     constructor(private flightService: FlightService, private searchOptions: SearchOptionsService,
-                private executionService: ExecutionCookieReaderService) {
+                private executionService: ExecutionCookieReaderService, private router: Router,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit() {
@@ -73,8 +75,9 @@ export class FlightsComponent implements OnInit {
                 });
     }
 
-    alert1(event) {
+    selectFlight(event: Offer) {
         alert(JSON.stringify(event));
         console.log(this.executionService.getExecution());
+        this.router.navigate(['select'], {relativeTo: this.route});
     }
 }

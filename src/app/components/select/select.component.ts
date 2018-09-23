@@ -14,6 +14,6 @@ export class SelectComponent implements OnInit {
   }
 
   getExecution() {
-    console.log(this.selectService.getUrl('11111111'));
+    this.selectService.getUrl('11111111');
   }
 }

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {BreadCrumb} from '../../model/navigation/BreadCrumb';
 import {distinctUntilChanged, filter} from 'rxjs/internal/operators';
-import {Subject} from 'rxjs';
 import {PageTitleService} from '../../services/page-title.service';
 
 const BREADCRUMB = 'breadcrumb';
@@ -55,7 +54,10 @@ export class BreadCrumbsComponent implements OnInit {
                 return breadCrumbs;
             }
 
-            this.generateBreadcrumbs(childRoute, nextUrl, breadCrumbs);
+            breadCrumbs = this.generateBreadcrumbs(childRoute, nextUrl, breadCrumbs);
+
         }
+
+        return breadCrumbs;
     }
 }
