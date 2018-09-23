@@ -1,5 +1,5 @@
 .card {
-    max-width: 50rem;
+    width: 30rem;
     cursor: pointer;
     transition: box-shadow, transform .3s;
     border-radius:10px;

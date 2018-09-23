@@ -1,0 +1,11 @@
+.flex-container {
+    display: flex;
+}
+
+.btn-info {
+    border:0 solid transparent; /* this was 1px earlier */
+    cursor: pointer;
+    margin-left: 1rem;
+    margin-top: .5rem;
+    border-radius: 5px;
+}

@@ -1,0 +1,8 @@
+<div class="bread-crumbs flex-container">
+    <div *ngFor="let breadcrumb of breadcrumbs; let last = last">
+      <a [routerLink]="[breadcrumb.url]">
+        <button class="btn-info">{{breadcrumb.label}}</button>
+      </a>
+      <span *ngIf="!last"> > </span>
+    </div>
+</div>
