@@ -1,8 +1,8 @@
 import {RouterModule, Routes} from '@angular/router';
 import {FlightsComponent} from '../components/flights/flights.component';
-import {AuthGuard} from '../guard/authGuard';
 import {LoginComponent} from '../components/login/login.component';
 import {SelectComponent} from '../components/select/select.component';
+import {SelectGuardGuard} from '../guard/select-guard.guard';
 
 const routes: Routes = [
     // {path: '', component: FlightsComponent, canActivate: [AuthGuard]},
@@ -11,16 +11,15 @@ const routes: Routes = [
         component: FlightsComponent,
         data: {
             breadcrumb: 'Search Page'
+        }
+    },
+    {
+        path: 'select',
+        component: SelectComponent,
+        data: {
+            breadcrumb: 'Select Page'
         },
-        children: [
-            {
-                path: 'select',
-                component: SelectComponent,
-                data: {
-                    breadcrumb: 'Select Page'
-                },
-            }
-        ]
+        canActivate: [SelectGuardGuard]
     },
     {path: 'login', component: LoginComponent},
     {path: '**', redirectTo: 'search'}

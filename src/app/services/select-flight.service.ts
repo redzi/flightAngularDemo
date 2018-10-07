@@ -12,13 +12,16 @@ export class SelectFlightService {
 
   }
 
-  select(shoppingBasketHashCode: string) {
+  select(shoppingBasketHashCode: number) {
       return this.http
-          .post(this.getUrl(shoppingBasketHashCode), null, {headers: this.authService.getHeaders()});
+          .post(this.getUrl(shoppingBasketHashCode.toString()), null, {headers: this.authService.getHeaders(),
+              withCredentials: true, observe: 'response'});
   }
 
   getUrl(shoppingBasketHashCode: string) {
     const execution = this.executionService.getExecution();
-    return `http://localhost:8090/SSW2010/api/v3.6/products/air?jipcc=VAVA&selectFlights=${shoppingBasketHashCode}&execution=${execution}`;
+ // return `http://localhost:8090/SSW2010/api/v4.0/products/air?jipcc=VAVA&selectFlights=${shoppingBasketHashCode}&execution=${execution}`;
+    return `http://ctovm1824.sgdcelab.sabre.com:8081/SSW2010/api/v4.0/products/air?jipcc=VAVA`
+        + `&selectFlights=${shoppingBasketHashCode}&execution=${execution}`;
   }
 }

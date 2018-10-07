@@ -6,6 +6,7 @@ import {SearchOptionsService} from '../../services/search-options.service';
 import {Search} from '../../model/Search';
 import {ExecutionCookieReaderService} from '../../services/execution-cookie-reader.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SelectedOfferProviderService} from '../../services/selected-offer-provider.service';
 
 @Component({
     selector: 'app-flights',
@@ -22,7 +23,7 @@ export class FlightsComponent implements OnInit {
 
     constructor(private flightService: FlightService, private searchOptions: SearchOptionsService,
                 private executionService: ExecutionCookieReaderService, private router: Router,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute, private selectedOfferProvider: SelectedOfferProviderService) {
     }
 
     ngOnInit() {
@@ -36,7 +37,12 @@ export class FlightsComponent implements OnInit {
             .pipe(
                 tap(data => console.log(data)),
                 tap(data => console.log(data.headers.get('Execution'))),
-                tap(data => this.executionService.setHeaders(data.headers)),
+                tap(data => {
+                    this.executionService.setHeaders(data.headers);
+                }),
+                tap(data => {
+                    const jsession = document.cookie;
+                }),
                 map(data => data.body.unbundledOffers),
                 map(data => data[0]),
                 map(flights => flights.filter(flight => flight
@@ -76,8 +82,8 @@ export class FlightsComponent implements OnInit {
     }
 
     selectFlight(event: Offer) {
-        alert(JSON.stringify(event));
         console.log(this.executionService.getExecution());
-        this.router.navigate(['select'], {relativeTo: this.route});
+        this.selectedOfferProvider.selectedOffer = event;
+        this.router.navigate(['select']);
     }
 }

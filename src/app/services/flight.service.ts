@@ -8,8 +8,8 @@ import {AuthServiceService} from './auth-service.service';
 })
 export class FlightService {
 
-    private static url = 'http://localhost:8090/SSW2010/api/v3.6/products/air/search?jipcc=VAVA';
-    // static url = 'http://ctovm1824.sgdcelab.sabre.com:8081/SSW2010/api/v3.6/products/air/search?jipcc=VAVA';
+    // private static url = 'http://localhost:8090/SSW2010/api/v4.0/products/air/search?jipcc=VAVA';
+    private static url = 'http://ctovm1824.sgdcelab.sabre.com:8081/SSW2010/api/v4.0/products/air/search?jipcc=VAVA';
 
     constructor(private http: HttpClient, private authService: AuthServiceService) {
 
@@ -19,7 +19,7 @@ export class FlightService {
         return this
             .http
             .post(FlightService.url, this.getRequest(from, to, when, cabinClass),
-                {headers: this.authService.getHeaders(), observe: 'response'} );
+                {headers: this.authService.getHeaders(), withCredentials: true, observe: 'response'} );
     }
 
     private getRequest(from: string, to: string, when: Date, cabinClass: string): string {

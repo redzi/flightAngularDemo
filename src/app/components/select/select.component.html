@@ -1,4 +1,11 @@
 <div>
-  kuku
-  {{getExecution()}}
+  <div class="offer">
+    <app-flight [flight]="offer"></app-flight>
+  </div>
+</div>
+<div id="loading" *ngIf="waiting">
+  <h1><span>Loading...</span></h1>
+</div>
+<div id="error" *ngIf="error" class="alert alert-danger">
+  Sorry, an error occurred, please try again!
 </div>

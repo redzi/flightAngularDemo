@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {RouteHistoryService} from '../services/route-history.service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  ngOnInit() {
+    constructor(private routeHistoryService: RouteHistoryService) {
+      this.routeHistoryService.loadRouting();
+    }
+
+    ngOnInit() {
   }
 }

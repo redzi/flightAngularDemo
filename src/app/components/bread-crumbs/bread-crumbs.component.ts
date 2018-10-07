@@ -3,6 +3,8 @@ import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {BreadCrumb} from '../../model/navigation/BreadCrumb';
 import {distinctUntilChanged, filter} from 'rxjs/internal/operators';
 import {PageTitleService} from '../../services/page-title.service';
+import {RouteHistoryService} from '../../services/route-history.service';
+import {Observable} from 'rxjs';
 
 const BREADCRUMB = 'breadcrumb';
 
@@ -15,49 +17,41 @@ export class BreadCrumbsComponent implements OnInit {
 
     public breadcrumbs: Array<BreadCrumb>;
 
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private pageTitleService: PageTitleService) {
+    constructor(private routeHistoryService: RouteHistoryService, private pageTitleService: PageTitleService) {
         this.breadcrumbs = [];
     }
 
     ngOnInit() {
-        this.router.events
-            .pipe(
-                filter(event => event instanceof NavigationEnd),
-                distinctUntilChanged()
-            )
-            .subscribe(event => {
-                this.breadcrumbs = this.generateBreadcrumbs(this.activatedRoute.root);
+        this.routeHistoryService.getHistory()
+            .subscribe((history: ActivatedRoute[]) => {
+                this.breadcrumbs = this.generateBreadcrumbs(history);
                 this.pageTitleService.emitPageTitle(this.breadcrumbs);
             });
     }
 
-    generateBreadcrumbs(route: ActivatedRoute, url: string = '', breadCrumbs: Array<BreadCrumb> = []): Array<BreadCrumb> {
+    generateBreadcrumbs(history: ActivatedRoute[]) {
 
-        for (const childRoute of route.children) {
+        let url: string = '';
+        let breadcrumbs: BreadCrumb[] = [];
 
-            if ( !(childRoute.routeConfig && childRoute.routeConfig.data && childRoute.routeConfig.data[BREADCRUMB]) ) {
-                return this.generateBreadcrumbs(childRoute, url, breadCrumbs);
+        for (const route: ActivatedRoute of history) {
+
+            if (!(route && route.routeConfig && route.routeConfig.data && route.routeConfig.data[BREADCRUMB])) {
+                continue;
             }
 
-            const label = childRoute.routeConfig.data[BREADCRUMB];
-            const path = childRoute.routeConfig.path;
-            const nextUrl = `${url}/${path}`;
+            const label = route.routeConfig.data[BREADCRUMB];
+            const path = route.routeConfig.path;
+            url = `${url}/${path}`;
 
             const breadCrumb: BreadCrumb = {
                 label: label,
-                url: nextUrl
+                url: url
             };
 
-            breadCrumbs = [...breadCrumbs, breadCrumb];
-
-            if (childRoute.children.length === 0) {
-                return breadCrumbs;
-            }
-
-            breadCrumbs = this.generateBreadcrumbs(childRoute, nextUrl, breadCrumbs);
-
+            breadcrumbs = [...breadcrumbs, breadCrumb];
         }
 
-        return breadCrumbs;
+        return breadcrumbs;
     }
 }
