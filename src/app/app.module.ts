@@ -15,6 +15,8 @@ import { FilterFlightPipe } from './pipes/filter-flight.pipe';
 import { SelectComponent } from './components/select/select.component';
 import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.component';
 import { HeaderComponent } from './components/header/header.component';
+import { SelectedOfferComponent } from './components/selected-offer/selected-offer.component';
+import { ItineraryPartComponent } from './components/itinerary-part/itinerary-part.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { HeaderComponent } from './components/header/header.component';
     FilterFlightPipe,
     SelectComponent,
     BreadCrumbsComponent,
-    HeaderComponent
+    HeaderComponent,
+    SelectedOfferComponent,
+    ItineraryPartComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,9 @@
+<div *ngFor="let segment of itineraryPart.segments">
+  <div>Origin: {{segment.origin}}</div>
+  <div>Destination: {{segment.destination}}</div>
+  <div>Departure time: {{segment.departure | date:'yyyy-MM-dd HH:mm'}}</div>
+  <div>Arrival time: {{segment.arrival | date:'yyyy-MM-dd HH:mm'}}</div>
+  <div>Duration: {{segment.duration}} minutes</div>
+  <div>Flight no.: {{segment.flight.flightNumber}}</div>
+  <div>Operating airline: {{segment.flight.operatingAirlineCode}}</div>
+</div>

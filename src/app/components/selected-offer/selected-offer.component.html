@@ -1,0 +1,6 @@
+<div class="selected-offer">
+  <div>Price: {{selectedOffer.total.alternatives[0][0].amount | currency:"AUD"}}</div>
+  <div>Brand: {{selectedOffer.brandId}}</div>
+  <div>Cabin class: {{selectedOffer.cabinClass}}</div>
+  <app-itinerary-part *ngFor="let itineraryPart of selectedOffer.itineraryPart" [itineraryPart]="itineraryPart"></app-itinerary-part>
+</div>
