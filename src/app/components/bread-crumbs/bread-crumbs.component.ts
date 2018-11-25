@@ -34,7 +34,7 @@ export class BreadCrumbsComponent implements OnInit {
         let url: string = '';
         let breadcrumbs: BreadCrumb[] = [];
 
-        for (const route: ActivatedRoute of history) {
+        for (const route of history) {
 
             if (!(route && route.routeConfig && route.routeConfig.data && route.routeConfig.data[BREADCRUMB])) {
                 continue;
